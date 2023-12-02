@@ -1,28 +1,13 @@
-name: Run tests, build Docker image and push it to DockerHub
+name: Build Docker image and push it to DockerHub
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-  run-tests:
+  build-image-and-push-to-registry:
     runs-on: ubuntu-latest
-    steps:
-      - name: Retrieve repository content
-        uses: actions/checkout@v3
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.11"
-      - name: Run tests
-        run: python -m unittest src/ops_test.py
-
-  push-to-registry:
-    runs-on: ubuntu-latest
-    needs: run-tests
-    if: success()
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
